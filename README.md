@@ -1,24 +1,122 @@
-# Dynamic-Pricing-Strategy
-Dynamic Pricing is an application of Data Science that involves adjusting product or service prices based on various factors in real time. It is employed by businesses to optimize their revenue and profitability by setting flexible prices that respond to market demand, customer behaviour, and competitor pricing.
+# Dynamic Pricing Strategy for Ride-Sharing Company
 
-Using data-driven insights and algorithms, businesses can dynamically modify prices to achieve the most favourable outcomes.
+## 1. Problem Definition
 
-For example, consider a ride-sharing company operating in a metropolitan area. The company wants to optimize its pricing strategy to maximize revenue and improve customer satisfaction. The traditional pricing model used by the business is based on fixed rates per kilometre, which does not account for fluctuations in supply and demand.
+### Objective
+The primary goal of this project was to develop a **Dynamic Pricing Strategy** for a ride-sharing company using Machine Learning. The objective was to optimize pricing in real-time by dynamically adjusting ride costs based on supply-demand factors to maximize revenue and improve customer satisfaction.
 
-By implementing a dynamic pricing strategy, the company can leverage data science techniques to analyze various factors such as historical trip data, real-time demand, traffic patterns, and events happening in the area.
+### Problem
+The company previously used a static pricing model that didn’t account for fluctuations in supply and demand. This led to:
+- Missed opportunities during high-demand periods.
+- Inefficient pricing during low-demand times.
 
-Using Machine Learning algorithms, the company can analyze data and adjust its prices in real-time. When demand is high, such as during rush hours or major events, the algorithm can increase the cost of the rides to incentivize more drivers to be available and balance the supply and demand. Conversely, during periods of low demand, the algorithm can lower the prices to attract more customers.
+---
 
-## Overview
+## 2. Data Collection & Understanding
 
-- Implemented Dynamic Pricing Strategy: Developed and executed a dynamic pricing model using Python, optimizing
-revenue by adjusting ride costs based on real-time demand and supply data.
+### Data Sources
+The dataset used for the project included:
+- **Historical sales data** (e.g., cost of rides, number of riders, and drivers).
+- **Customer behavior data** (e.g., ride durations, vehicle types).
+- **Market demand and supply data** (e.g., number of available drivers, traffic patterns).
 
-- Data-Driven Decision Making: Leveraged historical sales data, customer behavior insights, and market trends to drive
-pricing adjustments, increasing profitability in high-demand periods.
+### Main Features
+- **Number of Riders**
+- **Number of Drivers**
+- **Location Category** (Urban, Suburban, Rural)
+- **Expected Ride Duration**
+- **Historical Cost of Ride**
+- **Vehicle Type** (Premium, Economy)
 
-- Advanced Data Analysis: Utilized machine learning algorithms and data visualization tools like Plotly to analyze ride
-duration, cost, and customer segmentation, enhancing pricing accuracy and customer satisfaction.
+---
 
-- Predictive Modeling: Trained and deployed a machine learning model to predict ride costs, incorporating factors such as
-the number of drivers, riders, and vehicle type, resulting in a 82.7% increase in profitable rides.
+## 3. Data Preprocessing
+
+### Handling Missing Data
+- Filled missing numeric values with the mean of the respective feature.
+- Filled missing categorical values with the mode (most frequent value).
+
+### Outlier Detection & Removal
+- Detected outliers using the Interquartile Range (IQR) method.
+- Replaced outliers with the mean for affected features.
+
+### Feature Engineering
+- Converted categorical features like **Vehicle Type** into numeric representations (1 for Premium, 0 for Economy).
+- Created new features:
+  - **Demand Multiplier** and **Supply Multiplier** based on percentile-based thresholds to reflect high or low demand/supply conditions.
+
+---
+
+## 4. Exploratory Data Analysis (EDA)
+
+### Descriptive Statistics
+- Calculated mean, median, and standard deviation for ride durations, costs, and number of riders/drivers.
+
+### Visualization
+- **Scatter Plots**: Explored relationships (e.g., ride duration vs. historical cost).
+- **Box Plots**: Visualized ride cost distributions by vehicle type.
+- **Heatmaps**: Displayed correlations between variables such as Number of Riders, Number of Drivers, and Cost of Rides.
+
+---
+
+## 5. Model Development & Implementation
+
+### Dynamic Pricing Algorithm
+A dynamic pricing model was developed to adjust prices based on demand and supply:
+- **Demand Multiplier**: Calculated using the 75th and 25th percentiles of the Number of Riders. Prices increased with high demand and reduced with low demand.
+- **Supply Multiplier**: Calculated using the Number of Drivers. Prices adjusted inversely to supply (higher prices for lower supply).
+
+### Adjusted Ride Cost Formula
+Adjusted Ride Cost = Historical Cost × Demand Multiplier × Supply Multiplier
+
+---
+
+## 6. Model Training & Prediction
+
+### Machine Learning Model
+A **Random Forest Regressor** was trained to predict the adjusted ride cost using the following features:
+- Number of Riders
+- Number of Drivers
+- Vehicle Type (Economy/Premium)
+- Expected Ride Duration
+
+### Model Training
+- The dataset was split into training (80%) and test (20%) sets.
+- The model was trained on the training set using historical data.
+
+### Model Evaluation
+- Predictions from the test set were compared to actual ride costs.
+- Scatter plots visualized the relationship between predicted and actual ride costs.
+
+---
+
+## 7. Results & Evaluation
+
+### Profitability Analysis
+- The profit percentage for each ride was calculated by comparing the adjusted ride cost with the historical cost.
+- **Visualization**: A donut chart displayed the proportion of profitable rides versus loss-making rides.
+- **Results**: Significant improvement in profitability, especially during high-demand, low-supply scenarios.
+
+---
+
+## 8. Deployment & Future Work
+
+### Deployment Considerations
+- The dynamic pricing model can be deployed in real-time to adjust ride prices based on:
+  - Current rider demand.
+  - Driver availability.
+  - Events affecting traffic conditions.
+- The model will require regular updates with real-time data inputs.
+
+### Future Work
+1. **Enhancing Features**:
+   - Incorporate additional factors such as weather conditions, local events, and competitor pricing.
+2. **Model Optimization**:
+   - Experiment with advanced machine learning algorithms (e.g., Gradient Boosting, XGBoost) for improved prediction accuracy.
+3. **Scalability**:
+   - Expand the model to cover different geographic locations, accounting for regional pricing factors.
+
+---
+
+## Conclusion
+The implementation of a dynamic pricing strategy significantly improved the company’s revenue potential and customer satisfaction by leveraging real-time supply-demand conditions. This project highlights the power of Machine Learning in driving operational efficiency and profitability in ride-sharing platforms.
